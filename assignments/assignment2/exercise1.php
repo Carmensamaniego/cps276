@@ -1,4 +1,4 @@
-<?<php>
+<?php>
 
    class Sets {
         public function numberSets(){
