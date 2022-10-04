@@ -17,25 +17,22 @@
 
 //try 1
 
-/*
 
-    $row = "<tr>";
-    //$cell = 0;
 
-    for ($i = 1; $i < 16; $i++){
-        $row .= "<tr>Row $i ";
+$row = "<table border='1'> ";
+
+for ($i = 1; $i < 16; $i++){
+        $row .= "<tr> ";
         $j = 1;
-        $row .= "<tr>";
-        while($j < 5){
-            $row .= "<td>Cell $j </td>";
+        while($j < 6){
+            $row .= "<td>Row $i Cell $j </td>";
             $j++;
         }
-        $row .= "</td></tr>";
+        $row .= "</tr>";
+}
 
-    }
-
-    $row .= "</td>"; */
-
+$row .= " </table>";
+/*
     //Next try
 
     $row = "<tr> ";
@@ -72,16 +69,8 @@
 <title>HTML Tutorial</title>
 <body>
 
-<h1>This is a heading</h1>
 
 <?php echo $row ?>
-
-<table border="1">
- <tr>
- <td>Cell 1</td>
- <td>Cell 2</td>
- </tr>
-</table>
 
 </body>
 </html>
