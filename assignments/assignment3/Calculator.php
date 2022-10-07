@@ -25,16 +25,16 @@ function calc($operator, $var1 = null, $var2 = null) {
         return "Cannot divide by zero <br>";
     }
     else if ($operator = "/"){
-        return "The product of the numbers is " . $var1 / $var2 . "<br>";
+        return "The division of the numbers is " . $var1 / $var2 . "<br>";
     }
     else if($operator = "*"){
         return "The product of the numbers is " . $var1 * $var2 . "<br>";
     }
     else if($operator = "+"){
-        return "The product of the numbers is " . $var1 + $var2 . "<br>";
+        return "The sum of the numbers is " . $var1 + $var2 . "<br>";
     }
     else if($operator = "-"){
-        return "The product of the numbers is " . $var1 - $var2 . "<br>";
+        return "The difference of the numbers is " . $var1 - $var2 . "<br>";
     }
 
     if ($var1 = null){
