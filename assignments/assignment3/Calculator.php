@@ -19,8 +19,12 @@ function calc($operator, $var1 = null, $var2 = null) {
             return "Cannot divide by zero <br>";
         }
         else if ($operator = "/"){
-            return "The product of the numbers is " . $var1 / $var2 . "<br>";
-            
+            if($var2 != null){
+            return "The division of the numbers is " . $var1 / $var2 . "<br>";
+            }
+            else{
+                return "You must enter a string and two numbers <br>";
+            }
         }
         //return "Cannot divide by zero <br>";
     }
@@ -28,26 +32,42 @@ function calc($operator, $var1 = null, $var2 = null) {
         return "The division of the numbers is " . $var1 / $var2 . "<br>";
     }*/
     else if($operator == "*"){
+        if($var2 != null){
         return "The product of the numbers is " . $var1 * $var2 . "<br>";
+        }
+        else{
+            return "You must enter a string and two numbers <br>"; 
+        }
     }
     else if($operator == "+"){
+        if($var2 != null){
         return "The sum of the numbers is " . $var1 + $var2 . "<br>";
+        }
+        else{
+            return "You must enter a string and two numbers <br>";
+        }
     }
     else if($operator == "-"){
+        if($var2 != null){
         return "The difference of the numbers is " . $var1 - $var2 . "<br>";
+        }
+        else{
+            return "You must enter a string and two numbers <br>";
+        }
     }
 
-    if ($var1 == null){
+    /*if ($var1 = null){
         return "You must enter a string and two numbers. test1 <br>";
     }
-    if ($var1 == null){
-        if($var2 == null){
+    else if ($var2 = null){
         return "You must enter a string and two <numbers></numbers> test2 <br>";
+    }*/
+
+    if(is_int($operator)){
+            return "You must enter a string and two numbers <br>";        
         }
-
-
     }
 }
-}
+
 
 ?>
