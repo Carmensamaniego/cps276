@@ -14,37 +14,39 @@ echo $Calculator->calc(10); //will output You must enter a string and two <numbe
 class Calculator{
 
 function calc($operator, $var1 = null, $var2 = null) {
-    if ($operator = "/" && $var2 == 0) {
-       /* if($var2 == 0){
+    if ($operator == "/") {
+        if($var2 == 0){
             return "Cannot divide by zero <br>";
         }
         else if ($operator = "/"){
             return "The product of the numbers is " . $var1 / $var2 . "<br>";
             
-        }*/
-        return "Cannot divide by zero <br>";
+        }
+        //return "Cannot divide by zero <br>";
     }
-    else if ($operator = "/"){
+   /* else if ($operator == "/"){
         return "The division of the numbers is " . $var1 / $var2 . "<br>";
-    }
-    else if($operator = "*"){
+    }*/
+    else if($operator == "*"){
         return "The product of the numbers is " . $var1 * $var2 . "<br>";
     }
-    else if($operator = "+"){
+    else if($operator == "+"){
         return "The sum of the numbers is " . $var1 + $var2 . "<br>";
     }
-    else if($operator = "-"){
+    else if($operator == "-"){
         return "The difference of the numbers is " . $var1 - $var2 . "<br>";
     }
 
-    if ($var1 = null){
-        return "You must enter a string and two numbers. <br>";
+    if ($var1 == null){
+        return "You must enter a string and two numbers. test1 <br>";
     }
-    else if ($var2 = null){
-        return "You must enter a string and two <numbers></numbers> <br>";
-    }
+    if ($var1 == null){
+        if($var2 == null){
+        return "You must enter a string and two <numbers></numbers> test2 <br>";
+        }
 
 
+    }
 }
 }
 
