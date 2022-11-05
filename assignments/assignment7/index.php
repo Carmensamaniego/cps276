@@ -5,8 +5,9 @@ require_once "fileUploadProc.php";
 require_once 'Crud.php';
 require_once 'Pdo_methods.php';
 require_once 'Db_conn.php';
-$page = new Page();
-$crud = new Crud();
+require_once 'Page.php';
+//$page = new Page();
+$crud = new Crud();  // will this go to this? <a href="storedfiles/">Show File List</a><br>
 
 $output = "";
 

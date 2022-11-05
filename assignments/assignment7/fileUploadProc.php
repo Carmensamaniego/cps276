@@ -39,6 +39,8 @@
             //Also, is this what goes in our data table?
             //move_uploaded_file( $_FILES["file"]["tmp_name"], "storedfiles/" . $_FILES["file"]["filename"])
             $output = "<p>File has been added.</p>";
+            //store file path storedfiles/$_FILES['file']['name']  will store someting like storedfiles/newlestter1.pdf  you will have to pu
+            //this as anchor element <a href="russet-V8/~cs/storedfiles/newletter1.pdf">
         }
     
     }
@@ -46,32 +48,7 @@
 
 
 
-    // $output = "";
 
-     /*function createNewFile(){
-         if(isset($_POST['submit'])){
-             if(is_dir("directories/".$_POST['foldername'])){
-                 return "A directory already exists with that name";
-
-             
-            
-         }
-         else{
-             $path = "storedfiles/".$_POST['filename'];
-
-             //return "directory does not exist";
-              mkdir ($path);
-             chmod($path, 0777);
-             $handle = fopen($path . "/readme.txt", "w");
-             fwrite($handle, $_POST['textcontent']);
-             fclose($handle);
-             return "\n File and Directory was created <br> <a href=$path/readme.txt
-             >Path where file is located </a> \n";
-
-         }
-     }
-
-     }*/
 
  
 

@@ -1,5 +1,7 @@
 <?php
 
+require_once 'Pdo_methods.php';
+
 class Crud extends Pdomethods{
 
 	public function getNames($type){
@@ -39,7 +41,7 @@ class Crud extends Pdomethods{
 	    /* THESE BINDINGS ARE LATER INJECTED INTO THE SQL STATEMENT THIS PREVENTS AGAIN SQL INJECTIONS */
 	    $bindings = [
 			[':filename',$_POST['filename'],'str'], //filename
-			[':file',$_POST['file'],'file'], //filepath  might need direct path  also, is file a 'str' or 'file'?
+			[':file',$_POST['file'],'str'], //filepath  might need direct path  also, is file a 'str' or 'file'?
 			//[':eyecolor',$_POST['color'],'str'], //not needed
 			//[':state',$_POST['state'],'str'] //not needed
 		];
