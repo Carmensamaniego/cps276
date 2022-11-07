@@ -2,11 +2,11 @@
 $output = "";
 
 require_once "fileUploadProc.php";
-require_once 'Crud.php';
-require_once 'Pdo_methods.php';
-require_once 'Db_conn.php';
-require_once 'Page.php';
-//$page = new Page();
+require_once "Crud.php";
+require_once "Pdo_methods.php";
+require_once "Db_conn.php";
+require_once "Page.php";
+$page = new Page();
 $crud = new Crud();  // will this go to this? <a href="storedfiles/">Show File List</a><br>
 
 $output = "";
@@ -39,6 +39,7 @@ echo  $output;
         <form action="index.php" method="post" enctype="multipart/form-data">
         <h1>File Upload</h1>
         <h2></h2>
+        <?php echo $page->nav(); ?>
         <a href="storedfiles/">Show File List</a><br>
         <p></p>
         

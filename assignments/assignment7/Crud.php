@@ -31,19 +31,20 @@ class Crud extends Pdomethods{
 	}
 
 	public function addName(){
+
+		
 	
 		$pdo = new PdoMethods();
 
 		/* HERE I CREATE THE SQL STATEMENT I AM BINDING THE PARAMETERS */
-		$sql = "INSERT INTO storefiles (file_name, file_itself) VALUES (:filename, :file)"; //might need to make file_name and file_itself
+		$sql = "INSERT INTO storefiles (file_name, file_path) VALUES (:filename, :file)"; //might need to make file_name and file_itself
 
 			 
 	    /* THESE BINDINGS ARE LATER INJECTED INTO THE SQL STATEMENT THIS PREVENTS AGAIN SQL INJECTIONS */
 	    $bindings = [
 			[':filename',$_POST['filename'],'str'], //filename
 			[':file',$_POST['file'],'str'], //filepath  might need direct path  also, is file a 'str' or 'file'?
-			//[':eyecolor',$_POST['color'],'str'], //not needed
-			//[':state',$_POST['state'],'str'] //not needed
+			//<a href="storedfiles/">Show File List</a><br>
 		];
 
 		/* I AM CALLING THE OTHERBINDED METHOD FROM MY PDO CLASS */
