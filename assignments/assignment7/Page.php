@@ -1,15 +1,17 @@
 
 <?php
 
+$path = "storedfiles/"
+
 class Page {
 	public function nav(){
 		$nav = <<<NAV
       <nav>
-        <ul>
-          <li><a href="index.php"></a></li>
-          <li><a href="file_name.php">Folder name</a></li>
+        
+          <a href="storedfiles/">Show File List</a><br>
+
           
-        </ul>
+        
       </nav>
 NAV;
 		return $nav;

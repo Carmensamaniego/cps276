@@ -18,6 +18,8 @@ else if(isset($_POST['delete'])){
   $output = $crud->deleteNames($_POST);
 }
 
+// echo $page->nav();
+
 echo  $output;
 
 ?>
@@ -40,7 +42,7 @@ echo  $output;
         <h1>File Upload</h1>
         <h2></h2>
         <?php echo $page->nav(); ?>
-        <a href="storedfiles/">Show File List</a><br>
+        
         <p></p>
         
 
