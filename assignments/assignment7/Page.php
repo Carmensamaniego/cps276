@@ -1,7 +1,6 @@
 
 <?php
 
-$path = "storedfiles/"
 
 class Page {
 	public function nav(){
