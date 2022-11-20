@@ -1,8 +1,8 @@
 <?php
 
-include_once("addnotes.php");
+//include_once("addnotes.php");
 require_once("adddisplaynotes.php");
-include_once("Pages.php");
+//include_once("Pages.php");
 //require_once("Pages.php");
 
 //$page = new Pages(); 
@@ -40,8 +40,8 @@ if(isset($_POST["addnote"])) {
             
 
             <div class="form-group">
-                <label for="datetime-local">Date and Time</label>
-                <input type="datetime-local" class="form-control" id="datetime-local" name="datetime-local">
+                <label for="datetime">Date and Time</label>
+                <input type="datetime-local" class="form-control" id="datetime" name="datetime">
             </div>
     
 

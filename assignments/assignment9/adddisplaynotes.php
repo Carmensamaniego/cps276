@@ -10,7 +10,7 @@ class DisplayFunctions extends PdoMethods {
 
     public function addanote(){
         // move this to adddisplaynotes maybe?
-        $dateofnote = $_POST["datetime-local"];
+        $dateofnote = $_POST["datetime"];
         $t = strtotime($dateofnote); //timestamp 1970
         //echo(date('l dS \o\f F Y h:i:s A', $t));  this was an example to help from tutor
         //$formatDate = (date('n\/d\/Y g\:i a', $t)); //used page 318
@@ -30,8 +30,6 @@ class DisplayFunctions extends PdoMethods {
         $bindings = [
             [':thedate',$t,'str'], //change from str?
             [':thenote',$_POST['notes'],'str']  //text instead of str?
-            //[':eyecolor',$_POST['color'],'str'],
-            //[':state',$_POST['state'],'str']
         ];
     
         /* I AM CALLING THE OTHERBINDED METHOD FROM MY PDO CLASS */
@@ -52,7 +50,8 @@ class DisplayFunctions extends PdoMethods {
         $pdo = new PdoMethods();
 
         /* CREATE THE SQL */
-        $sql = "SELECT * FROM notes";
+        $sql = "SELECT the_date, the_note FROM notes WHERE the_date BETWEEN :begDate AND :endDate ORDER BY the_date DESC";
+
 
         //PROCESS THE SQL AND GET THE RESULTS
         $records = $pdo->selectNotBinded($sql); //  <------ here is $records, Carmen!!!! see Pdo-methods and dbconn
@@ -63,9 +62,7 @@ class DisplayFunctions extends PdoMethods {
         }
         else {
             if(count($records) != 0){
-                if($type == 'list'){return $this->createList($records);}
-                if($type == 'input'){return $this->createInput($records);}
-                if($type == 'table'){return $this->createTable($records);}	
+                if($type == 'table'){return $this->makeTable($records);}	
             }
             else {
                 return 'no names found';
@@ -73,48 +70,40 @@ class DisplayFunctions extends PdoMethods {
         }
     }
 
+
+
     private function createTable($records) {
-        $dateofnote = $_POST["datetime-local"];
+        
+        
+        $dateofnote = $_POST["datetime"];
         $t = strtotime($dateofnote); //timestamp 1970
         $formatDate = (date('n\/d\/Y g\:i a', $t));
         $w = "<table border='2'>
         <tr><td>Date</td><td>Note</td></tr>"; // maybe add  <th></th> later?
         foreach ($records as $row){
-            $t = $row['the_date'];
-            $formatDate = (date('n\/d\/Y g\:i a', $t));
+            $t = $row['the_date'];//error
+            $formatDate = (date("n/d/Y h:i a", $t));//error
             $w .= "<td>{$formatDate} </td> <td> {$row['the_note']}</td>";
         }
         $w .= "</table>";
         return $w;
     }
 
-    // I need to change the code in here to make my table look better. 
-    private function createList($records){
-		$list = '<ol>';
+    private function makeTable($records){
+        $output = "<table class='table table-bordered table-striped'><thead><tr>";
+		$output .= "<th>Date</th><th>Note</th></tr><tbody>";
 		foreach ($records as $row){
-        
-			$list .= "<li>Name: {$row['the_date']} {$row['the_note']}</li>";
+            $output .= "<tr><td>{$row['the_date']}</td>";
+            
+
+            $output .= "<td>{$row['the_note']}</td></tr>";
 		}
-		$list .= '</ol>';
-		return $list;
-
-	}
-
-
-    private function filterNotes($records) {
-        //change begDate and endDate for input in displaypage.php
-        $sql = "SELECT the_date, the_note FROM notes WHERE the_date BETWEEN :begDate AND :endDate ORDER BY hte_date DESC";
-        $bindings = [
-            [':thedate',$t,'str'], //change from str?
-            [':thenote',$_POST['notes'],'str']  //text instead of str?
-            //[':eyecolor',$_POST['color'],'str'],
-            //[':state',$_POST['state'],'str']
-        ];
-    
-        /* I AM CALLING THE OTHERBINDED METHOD FROM MY PDO CLASS */
-        $result = $pdo->otherBinded($sql, $bindings);
-        return $result;
+		
+		$output .= "</tbody></table></form>";
+		return $output;
     }
+
+
 
 }
 

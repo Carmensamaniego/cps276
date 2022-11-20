@@ -30,7 +30,7 @@ $output = "";
 <body>
 
     <main class="container"> 
-        <form action="index.php" method="post" enctype="multipart/form-data">
+        <form action="#" method="post" enctype="multipart/form-data">
         <h1>Display Notes</h1>
         <nav>
         <a href="index">Add Notes</a><br>
