@@ -74,9 +74,9 @@ class DisplayFunctions extends PdoMethods {
     }
 
     private function createTable($records) {
-        //$dateofnote = $_POST["datetime-local"];
-        //$t = strtotime($dateofnote); //timestamp 1970
-        //$formatDate = (date('n\/d\/Y g\:i a', $t));
+        $dateofnote = $_POST["datetime-local"];
+        $t = strtotime($dateofnote); //timestamp 1970
+        $formatDate = (date('n\/d\/Y g\:i a', $t));
         $w = "<table border='2'>
         <tr><td>Date</td><td>Note</td></tr>"; // maybe add  <th></th> later?
         foreach ($records as $row){
@@ -98,22 +98,6 @@ class DisplayFunctions extends PdoMethods {
 		$list .= '</ol>';
 		return $list;
 
-        //from assignment2
-        /*
-        $row = "<table border='1'> ";
-
-        for ($i = 1; $i < 16; $i++){
-            $row .= "<tr> ";
-            $j = 1;
-                while($j < 6){
-                    $row .= "<td>Row $i Cell $j </td>";
-                    $j++;
-                }
-            $row .= "</tr>";
-        }
-
-        $row .= " </table>";
-        */
 	}
 
 
