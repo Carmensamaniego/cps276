@@ -14,7 +14,7 @@ class DisplayFunctions extends PdoMethods {
         $t = strtotime($dateofnote); //timestamp 1970
         //$dateint = gettype((int)$t);
         //echo(date('l dS \o\f F Y h:i:s A', $t));  this was an example to help from tutor
-        //$formatDate = (date('n\/d\/Y g\:i a', $t)); //used page 318
+        //$formatDate = (date("n/d/Y h:i a", $t)); //used page 318
         //echo $formatDate;
 	
         $pdo = new PdoMethods();
@@ -46,7 +46,7 @@ class DisplayFunctions extends PdoMethods {
     }
 
     public function getNotes($type){
-            
+       if(isset($_POST['submit'])){     
         /* CREATE AN INSTANCE OF THE PDOMETHODS CLASS*/
         $pdo = new PdoMethods();
 
@@ -70,7 +70,7 @@ class DisplayFunctions extends PdoMethods {
         ];*/
 
         //PROCESS THE SQL AND GET THE RESULTS
-        $records = $pdo->selectNotBinded($sql); //  <------ here is $records, Carmen!!!! see Pdo-methods and dbconn
+        $records = $pdo->selectNotBinded($sql);
 
         /* IF THERE WAS AN ERROR DISPLAY MESSAGE */
         if($records == 'error'){
@@ -84,27 +84,10 @@ class DisplayFunctions extends PdoMethods {
                 return 'no notes';
             }
         }
+    }
 
     }
 
-
-
-    private function createTable($records) {
-        
-        
-        $dateofnote = $_POST["datetime"];
-        $t = strtotime($dateofnote); //timestamp 1970
-        $formatDate = (date('n\/d\/Y g\:i a', $t));
-        $w = "<table border='2'>
-        <tr><td>Date</td><td>Note</td></tr>"; // maybe add  <th></th> later?
-        foreach ($records as $row){
-            $t = $row['the_date'];//error
-            $formatDate = (date("n/d/Y h:i a", $t));//error
-            $w .= "<td>{$formatDate} </td> <td> {$row['the_note']}</td>";
-        }
-        $w .= "</table>";
-        return $w;
-    }
 
     private function makeTable($records){
         $output = "<table class='table table-bordered table-striped'><thead><tr>";
