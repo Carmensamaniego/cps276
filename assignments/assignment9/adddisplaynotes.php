@@ -12,10 +12,7 @@ class DisplayFunctions extends PdoMethods {
         // move this to adddisplaynotes maybe?
         $dateofnote = $_POST["datetime"];
         $t = strtotime($dateofnote); //timestamp 1970
-        //$dateint = gettype((int)$t);
-        //echo(date('l dS \o\f F Y h:i:s A', $t));  this was an example to help from tutor
-        //$formatDate = (date("n/d/Y h:i a", $t)); //used page 318
-        //echo $formatDate;
+
 	
         $pdo = new PdoMethods();
 
@@ -51,26 +48,24 @@ class DisplayFunctions extends PdoMethods {
         $pdo = new PdoMethods();
 
         /* CREATE THE SQL */ // select all sql working, must connect the other still...
-        //$sql = "SELECT the_date, the_note FROM notes WHERE the_date BETWEEN :begDate AND :endDate ORDER BY the_date DESC";
-        $sql = "SELECT * FROM notes";
+        $sql = "SELECT the_date, the_note FROM notes WHERE the_date BETWEEN :begDate AND :endDate ORDER BY the_date DESC";
+        //$sql = "SELECT * FROM notes";
 
-       /* if(isset($_POST['submit'])){
-            $selectBeg = $_POST["begDate"];
-            $b = strtotime($selectBeg);
-            $begint = gettype((int)$b);
-            $selectEnd = $_POST["endDate"];
-            $e = strtotime($selectEnd);
-            $endint = gettype((int)$e);
-            //echo gettype($selectBeg);
-       }
+
+        $selectBeg = $_POST["begDate"];
+        $b = strtotime($selectBeg);
+
+        $selectEnd = $_POST["endDate"];
+        $e = strtotime($selectEnd);
+       
 
         $bindings = [ 
-            [':begDate',$begint,'int'], 
-            [':endDate',$endint,'int']  
-        ];*/
+            [':begDate',((int)$b),'int'], 
+            [':endDate',((int)$e),'int']  
+        ];
 
         //PROCESS THE SQL AND GET THE RESULTS
-        $records = $pdo->selectNotBinded($sql);
+        $records = $pdo->selectBinded($sql, $bindings);
 
         /* IF THERE WAS AN ERROR DISPLAY MESSAGE */
         if($records == 'error'){
@@ -90,10 +85,12 @@ class DisplayFunctions extends PdoMethods {
 
 
     private function makeTable($records){
+        //$formatDate = (date("n/d/Y h:i a", $t)); 
         $output = "<table class='table table-bordered table-striped'><thead><tr>";
 		$output .= "<th>Date</th><th>Note</th></tr><tbody>";
 		foreach ($records as $row){
-            $output .= "<tr><td>{$row['the_date']}</td>";
+            $formatDate = date("n/d/Y h:i a", $row['the_date']); 
+            $output .= "<tr><td>$formatDate</td>";
             
 
             $output .= "<td>{$row['the_note']}</td></tr>";
