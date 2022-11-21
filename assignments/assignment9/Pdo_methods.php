@@ -52,6 +52,7 @@ class PdoMethods extends DatabaseConn {
 			}
 			catch (PDOException $e){
 				//THIS WILL OUTPUT THE ERROR MESSAGE TO THE BROWSER REMOVE IF IN PRODUCTION
+				echo "we have an error now";
 				echo $e->getMessage();
 				return 'error';
 			}

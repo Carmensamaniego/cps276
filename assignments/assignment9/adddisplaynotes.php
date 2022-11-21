@@ -12,6 +12,7 @@ class DisplayFunctions extends PdoMethods {
         // move this to adddisplaynotes maybe?
         $dateofnote = $_POST["datetime"];
         $t = strtotime($dateofnote); //timestamp 1970
+        //$dateint = gettype((int)$t);
         //echo(date('l dS \o\f F Y h:i:s A', $t));  this was an example to help from tutor
         //$formatDate = (date('n\/d\/Y g\:i a', $t)); //used page 318
         //echo $formatDate;
@@ -49,9 +50,24 @@ class DisplayFunctions extends PdoMethods {
         /* CREATE AN INSTANCE OF THE PDOMETHODS CLASS*/
         $pdo = new PdoMethods();
 
-        /* CREATE THE SQL */
-        $sql = "SELECT the_date, the_note FROM notes WHERE the_date BETWEEN :begDate AND :endDate ORDER BY the_date DESC";
+        /* CREATE THE SQL */ // select all sql working, must connect the other still...
+        //$sql = "SELECT the_date, the_note FROM notes WHERE the_date BETWEEN :begDate AND :endDate ORDER BY the_date DESC";
+        $sql = "SELECT * FROM notes";
 
+       /* if(isset($_POST['submit'])){
+            $selectBeg = $_POST["begDate"];
+            $b = strtotime($selectBeg);
+            $begint = gettype((int)$b);
+            $selectEnd = $_POST["endDate"];
+            $e = strtotime($selectEnd);
+            $endint = gettype((int)$e);
+            //echo gettype($selectBeg);
+       }
+
+        $bindings = [ 
+            [':begDate',$begint,'int'], 
+            [':endDate',$endint,'int']  
+        ];*/
 
         //PROCESS THE SQL AND GET THE RESULTS
         $records = $pdo->selectNotBinded($sql); //  <------ here is $records, Carmen!!!! see Pdo-methods and dbconn
@@ -65,9 +81,10 @@ class DisplayFunctions extends PdoMethods {
                 if($type == 'table'){return $this->makeTable($records);}	
             }
             else {
-                return 'no names found';
+                return 'no notes';
             }
         }
+
     }
 
 
