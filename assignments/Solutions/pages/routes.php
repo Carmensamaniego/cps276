@@ -2,6 +2,14 @@
 
 $path = "index.php?page=welcome"; //maybe change to login?
 
+$navLogin=<<<HTML
+    <nav class="nav">
+        <a class="nav-link" href="index.php?page=login"></a>
+
+    </nav>
+
+HTML;
+
 
 $navStaff=<<<HTML
     <nav class="nav">

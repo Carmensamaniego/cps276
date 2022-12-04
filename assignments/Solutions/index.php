@@ -3,6 +3,10 @@
 /*I REQUIRE IN THE ROUTES PAGE WHICH IS ACTUALLY DOES THE WORK FOR GETTING THE PAGES.*/ 
 require_once('pages/routes.php');
 
+//$login = new LoginPage;
+
+//$login->login();
+
 ?>
 
 <!DOCTYPE html>
@@ -16,6 +20,7 @@ require_once('pages/routes.php');
 
 	<body class="container">
 		<?php
+
 			/* THIS IS THE PHP PAGE  */
 			echo $navAdmin;
 			

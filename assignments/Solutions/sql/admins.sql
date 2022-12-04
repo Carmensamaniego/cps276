@@ -9,3 +9,11 @@ CREATE TABLE `admins` (
   `status` varchar(250) DEFAULT NULL,
    PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
+
+
+INSERT INTO admins(name, email, password, status)
+VALUES('Carmen', 'csamanicg@admin.com', '$2y$10$tzxgJ6/ratN.qfbTKVO7feFQNvD6t/m9U04JsmAlCGHlY0iD/yejq
+', 'admin');
+INSERT INTO admins(name, email, password, status)
+VALUES('Carmen', 'csamanicg@staff.com', '$2y$10$tzxgJ6/ratN.qfbTKVO7feFQNvD6t/m9U04JsmAlCGHlY0iD/yejq
+', 'staff');

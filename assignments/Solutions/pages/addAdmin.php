@@ -64,7 +64,8 @@ function init(){
 
     /* THE ELEMENTS ARRAY HAS A MASTER STATUS AREA. IF THERE ARE ANY ERRORS FOUND THE STATUS IS CHANGED TO "ERRORS" FROM THE DEFAULT OF "NOERRORS".  DEPENDING ON WHAT IS RETURNED DEPENDS ON WHAT HAPPENS NEXT.  IN THIS CASE THE RETURN MESSAGE HAS "NO ERRORS" SO WE HAVE NO PROBLEMS WITH OUR VALIDATION AND WE CAN SUBMIT THE FORM */
     if($postArr['masterStatus']['status'] == "noerrors"){
-      
+
+
       /*addData() IS THE METHOD TO CALL TO ADD THE FORM INFORMATION TO THE DATABASE (NOT WRITTEN IN THIS EXAMPLE) THEN WE CALL THE GETFORM METHOD WHICH RETURNS AND ACKNOWLEDGEMENT AND THE ORGINAL ARRAY (NOT MODIFIED). THE ACKNOWLEDGEMENT IS THE FIRST PARAMETER THE ELEMENTS ARRAY IS THE ELEMENTS ARRAY WE CREATE (AGAIN SEE BELOW) */
       return addData($_POST);
 
@@ -160,7 +161,8 @@ function addData($post){
         return getForm("<p>There was a problem processing your form</p>", $elementsArr);
       }
       else {
-        return getForm("<p>Contact Information Added</p>", $elementsArr);
+        echo $password;
+        return getForm("<p>Admin Information Added</p>", $elementsArr);
       }
       
 }
@@ -175,7 +177,6 @@ global $stickyForm;
 /* THIS IS A HEREDOC STRING WHICH CREATES THE FORM AND ADD THE APPROPRIATE VALUES AND ERROR MESSAGES */
 $form = <<<HTML
     <h1>Add Admin</h1>
-
     <form method="post" action="index.php?page=addAdmin">
     <div class="form-group">
       <label for="name">Name (letters only){$elementsArr['name']['errorOutput']}</label>

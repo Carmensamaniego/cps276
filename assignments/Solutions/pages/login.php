@@ -1,16 +1,9 @@
 <?php
 // from github.com/sshaper/cps276_examples/blob/master/php-hashed-login/classes/Admin.php
-	function login($post){
-	   
-	    $pdo = new PdoMethods();
-	    $sql = "SELECT username, password FROM admin WHERE username = :username";
-		$bindings = array(
-			array(':username', $post['username'], 'str')
-		);
+//require_once 'Solutions\classes\Pdo_methods.php';	
+//C:\Users\offic\Desktop\cps276\assignments\Solutions\classes\Pdo_methods.php
 
-	    $records = $pdo->selectBinded($sql, $bindings);
-
-		/** IF THERE WAS AN RETURN ERROR STRING */
+function login(){
 		if($records == 'error'){
 			return "There was an error logging it";
 		}
@@ -33,37 +26,44 @@
 			}
 		}
     }
+
+
+
+
+
+
 ?>
 
 
-    <!DOCTYPE html>
-<html lang="en">
-<head>
-    <title>login page</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-		
-</head>
-<body>
+<!DOCTYPE html>
+	<html lang="en">
+	<head>
+		<title>login page</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+			
+	</head>
+	<body>
 
-<main class="container"> 
-        <form action="login.php" method="post">
-        <h1>Login</h1>
-        
-        <div class="form-group">
-            <label for="email">Name</label>
-            <input type="text" class="form-control" name="email" id="email">
-        </div>
+	<main class="container"> 
+			<form method='post' action='index.php?page=login'>
+			<h1>Login</h1>
+			
+			<div class="form-group">
+				<label for="email">Email</label>
+				<input type="text" class="form-control" name="email" id="email">
+			</div>
 
-        <div class="form-group">
-            <label for="password">Email Adress</label>
-            <input type="password" class="form-control" name="password" id="password">
-        </div>
+			<div class="form-group">
+				<label for="password">Password</label>
+				<input type="password" class="form-control" name="password" id="password">
+			</div>
 
-        <div class="form-group">
-            <input type="submit" class="btn btn-success" name="submit" id="submit" value="Login" >
-        </div>
+			<div class="form-group">
+				<input type="submit" class="btn btn-success" name="submit" id="submit" value="Login" >
+			</div>
 
-    </main>
-</body>
-</html>
+		</main>
+	</body>
+	</html>
+	
