@@ -161,7 +161,7 @@ function addData($post){
         return getForm("<p>There was a problem processing your form</p>", $elementsArr);
       }
       else {
-        echo $password;
+        //echo $password; //delete later. this gives hashed password
         return getForm("<p>Admin Information Added</p>", $elementsArr);
       }
       

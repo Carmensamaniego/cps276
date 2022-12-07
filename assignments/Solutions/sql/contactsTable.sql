@@ -11,7 +11,7 @@ CREATE TABLE `contactsTable` (
   `phone` varchar(250) DEFAULT NULL,
   `email` varchar(250) DEFAULT NULL,
   `dob` varchar(250) NOT NULL DEFAULT '',
-  `contacts` varchar(250) NOT NULL DEFAULT '',
+  `contact` varchar(250) NOT NULL DEFAULT '',
   `age` varchar(250) NOT NULL DEFAULT '',
    PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;

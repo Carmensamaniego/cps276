@@ -1,16 +1,42 @@
 <?php
 
-$path = "index.php?page=welcome"; //maybe change to login?
+//$path = "index.php?page=welcome"; //maybe change to login?
 
-$navLogin=<<<HTML
+
+
+      	
+	/*function security(){
+		session_start();
+		if($_SESSION['access'] !== "accessGranted"){
+		  header('location: index.php');
+		}
+	  }*/
+
+/*$navLogin=<<<HTML
     <nav class="nav">
         <a class="nav-link" href="index.php?page=login"></a>
 
     </nav>
 
-HTML;
+HTML;*/
 
+if($_POST)
 
+$output = "";
+	
+	function security(){
+		session_start();
+		if($_SESSION['access'] !== "accessGranted"){
+		  header('location: index.php');
+          $output = $navStaff;
+
+          if($_GET['status'] === 'admin'){
+            $output = $navAdmin;
+          }
+		}
+
+         
+	  }
 $navStaff=<<<HTML
     <nav class="nav">
         <a class="nav-link" href="index.php?page=addContact">Add Contact Information</a>
@@ -34,7 +60,12 @@ if(isset($_GET)){
         require_once('pages/addContact.php');
         $result = init();
     }
-    
+
+    else if($_GET['page'] === "login"){
+        require_once('pages/login.php');
+        $result = init();
+    }
+
     else if($_GET['page'] === "deleteContacts"){
         require_once('pages/deleteContacts.php');
         $result = init();
@@ -66,6 +97,8 @@ if(isset($_GET)){
 else {
     header('location: '.$path);
 }
+
+
 
 
 

@@ -2,11 +2,9 @@
 /* THIS ENTIRE PAGE IS JUST A PLACEHOLDER PAGE WHICH THE FORM WILL BE INJECTED INTO */
 /*I REQUIRE IN THE ROUTES PAGE WHICH IS ACTUALLY DOES THE WORK FOR GETTING THE PAGES.*/ 
 require_once('pages/routes.php');
-
 //$login = new LoginPage;
-
 //$login->login();
-
+$nav = "";
 ?>
 
 <!DOCTYPE html>
@@ -22,7 +20,7 @@ require_once('pages/routes.php');
 		<?php
 
 			/* THIS IS THE PHP PAGE  */
-			echo $navAdmin;
+			echo $nav;
 			
 			/* THE ACKNOWLEDGEMENT GOES HERE AS THE FIRST INDEX OF THE ARRAY  */
 			echo $result[0]; 

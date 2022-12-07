@@ -97,6 +97,13 @@ $elementsArr = [
      "regex"=>"dob"
      ],
 
+     "contact"=>[
+      "action"=>"optional",
+      "errorOutput"=>"",
+      "type"=>"checkbox",
+      "value"=>["newsletter"=>"", "emailupdates"=>"", "textupdates"=>""]
+    ],
+
     "age"=>[
     "action"=>"Required",
     "errorMessage"=>"<span style='color: red; margin-left: 15px;'>You must select at least one financial option</span>",
@@ -116,16 +123,16 @@ function addData($post){
 
       $pdo = new PdoMethods();
 
-      $sql = "INSERT INTO contactsTable (name, address, city, state, phone, email, dob, age) VALUES (:name, :address, :city, :state, :phone, :email, :dob, :age)";
+      $sql = "INSERT INTO contactsTable (name, address, city, state, phone, email, dob, contat, age) VALUES (:name, :address, :city, :state, :phone, :email, :dob, :contact, :age)";
 
       /* THIS TAKE THE ARRAY OF CHECK BOXES AND PUT THE VALUES INTO A STRING SEPERATED BY COMMAS  */
-      if(isset($_POST['financial'])){
-        $financial = "";
-        foreach($post['financial'] as $v){
-          $financial .= $v.",";
+      if(isset($_POST['contact'])){
+        $contact = "";
+        foreach($post['contact'] as $v){
+          $contact .= $v.",";
         }
         /* REMOVE THE LAST COMMA FROM THE CONTACTS */
-        $financial = substr($financial, 0, -1);
+        $contact = substr($contact, 0, -1);
       }
 
       if(isset($_POST['age'])){
@@ -144,6 +151,7 @@ function addData($post){
         [':phone',$post['phone'],'str'],
         [':email',$post['email'],'str'],
         [':dob',$post['dob'],'str'],
+        [':contact', $post['contact'], 'str'],
         [':age',$age,'str']
       ];
 
@@ -207,6 +215,20 @@ $form = <<<HTML
       <label for="dob">Date of Birth{$elementsArr['dob']['errorOutput']}</label>
       <input type="date" class="form-control" id="dob" name="dob" value="{$elementsArr['dob']['value']}" >
     </div>
+
+    <p>Please select contact options (optional):{$elementsArr['contact']['errorOutput']}</p>
+    <div class="form-check form-check-inline">
+      <input class="form-check-input" type="checkbox" name="contact[]" id="cpntact1" value="Newsletter" {$elementsArr['contact']['value']['newsletter']}>
+      <label class="form-check-label" for="contact1">Newsletter</label>
+    </div>
+    <div class="form-check form-check-inline">
+      <input class="form-check-input" type="checkbox" name="contact[]" id="contact2" value="Email Updates" {$elementsArr['contact']['value']['emailupdates']}>
+      <label class="form-check-label" for="contact2">Email Updates</label>
+    </div>
+    <div class="form-check form-check-inline">
+      <input class="form-check-input" type="checkbox" name="contact[]" id="contact3" value="Text Updates" {$elementsArr['contact']['value']['textupdates']}>
+      <label class="form-check-label" for="contact3">Text updates</label>
+    </div>
         
     <p>Please select an age-group (required):</p>
     <div class="form-check form-check-inline">
@@ -236,5 +258,7 @@ HTML;
 return [$acknowledgement, $form];
 
 }
+
+
 
 ?>

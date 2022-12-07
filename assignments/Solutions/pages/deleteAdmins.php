@@ -7,6 +7,8 @@ function init(){
         if(isset($_POST['chkbx'])){
             $error = false;
             foreach($_POST['chkbx'] as $id){
+
+                //echo $id;
                 $pdo = new PdoMethods();
 
                 $sql = "DELETE FROM admins WHERE id=:id";
@@ -27,6 +29,8 @@ function init(){
     }
     
     $output = "";
+
+    
     
     $pdo = new PdoMethods();
 
@@ -40,7 +44,7 @@ function init(){
         return [$output,""];
     }
     else {
-        $output = "<form method='post' action='index.php?page=deleteContacts'>";
+        $output = "<form method='post' action='index.php?page=deleteAdmins'>";
         $output .= "<input type='submit' class='btn btn-danger' name='delete' value='Delete'/><br><br><table class='table table-striped table-bordered'>
     <thead>
         <tr>
