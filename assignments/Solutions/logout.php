@@ -3,4 +3,5 @@ session_start();
 /* DELETE THE SESSION VALUES*/
 session_unset();
 
-header('Location: index.php');
+header('Location: login.php'); // should this be login or index?
+?>

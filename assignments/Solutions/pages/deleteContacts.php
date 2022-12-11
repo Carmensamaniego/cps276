@@ -1,4 +1,6 @@
 <?php
+security();
+
 function init(){
 
     require_once 'classes/Pdo_methods.php';
@@ -51,6 +53,7 @@ function init(){
         <th>Phone</th>
         <th>Email</th>
         <th>DOB</th>
+        <th>Contact</th>
         <th>Age</th>
         </tr>
     </thead><tbody>";
@@ -63,6 +66,7 @@ function init(){
         <td>{$row['phone']}</td>
         <td>{$row['email']}</td>
         <td>{$row['dob']}</td>
+        <td>{$row['contact']}</td>
         <td>{$row['age']}</td>
         <td><input type='checkbox' name='chkbx[]' value='{$row['id']}' /></td></tr>";
     }

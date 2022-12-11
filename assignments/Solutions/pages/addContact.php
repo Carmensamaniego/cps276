@@ -1,5 +1,5 @@
 <?php
-
+security();
 // CARMEN GO THROUGH THIS CAREFULLY!! Especially elementsarr.
 
 /* HERE I REQUIRE AND USE THE STICKYFORM CLASS THAT DOES ALL THE VALIDATION AND CREATES THE STICKY FORM.  THE STICKY FORM CLASS USES THE VALIDATION CLASS TO DO THE VALIDATION WORK.*/
@@ -51,11 +51,12 @@ $elementsArr = [
 	],
 
     "address"=>[
+      "action"=>"required",
     "errorMessage"=>"<span style='color: red; margin-left: 15px;'>Adress cannot be blank.</span>",
     "errorOutput"=>"",
     "type"=>"text",
     "value"=>"123 Streetname",
-        "regex"=>"address"
+    "regex"=>"address"
     ],
 
     "city"=>[
@@ -63,7 +64,7 @@ $elementsArr = [
     "errorOutput"=>"",
     "type"=>"text",
     "value"=>"Scott",
-        "regex"=>"city"
+    "regex"=>"city"
     ],
 
     "state"=>[
@@ -84,33 +85,46 @@ $elementsArr = [
     "email"=>[
     "errorMessage"=>"<span style='color: red; margin-left: 15px;'>Email cannot be blank and must be a valid email</span>",
     "errorOutput"=>"",
-    "type"=>"email",
+    "type"=>"text",
     "value"=>"abc@xyz.com",
-        "regex"=>"name"
+        "regex"=>"email"
     ],
    
     "dob"=>[
     "errorMessage"=>"<span style='color: red; margin-left: 15px;'>You must select valid date of birth</span>",
     "errorOutput"=>"",
-    "type"=>"date",
+    "type"=>"text",
      "value"=>"",
      "regex"=>"dob"
      ],
 
-     "contact"=>[
-      "action"=>"optional",
+   /*  "contact"=>[
+      "action"=>"notRequired",
       "errorOutput"=>"",
       "type"=>"checkbox",
-      "value"=>["newsletter"=>"", "emailupdates"=>"", "textupdates"=>""]
+      "status"=>["newsletter"=>"", "emailupdates"=>"", "textupdates"=>""]
     ],
 
     "age"=>[
-    "action"=>"Required",
+    "action"=>"required",
     "errorMessage"=>"<span style='color: red; margin-left: 15px;'>You must select at least one financial option</span>",
     "errorOutput"=>"",
     "type"=>"radio",
     "value"=>["10-18"=>"", "19-30"=>"", "31-50"=>"", "51+"=>""]
+  ]*/
+  "contact"=>[
+    "type"=>"checkbox",
+    "action"=>"notRequired",
+    "status"=>["newsletter"=>"", "emailupdates"=>"", "textupdates"=>""]
+  ],
+  "age"=>[
+    "errorMessage"=>"<span style='color: red; margin-left: 15px;'>You must select an age range</span>",
+    "errorOutput"=>"",
+    "action"=>"required",
+    "type"=>"radio",
+    "value"=>["10-18"=>"", "19-30"=>"", "31-50"=>"", "51+"=>""]
   ]
+
 ];
 
 
@@ -123,7 +137,7 @@ function addData($post){
 
       $pdo = new PdoMethods();
 
-      $sql = "INSERT INTO contactsTable (name, address, city, state, phone, email, dob, contat, age) VALUES (:name, :address, :city, :state, :phone, :email, :dob, :contact, :age)";
+      $sql = "INSERT INTO contactsTable (name, address, city, state, phone, email, dob, contact, age) VALUES (:name, :address, :city, :state, :phone, :email, :dob, :contact, :age)";
 
       /* THIS TAKE THE ARRAY OF CHECK BOXES AND PUT THE VALUES INTO A STRING SEPERATED BY COMMAS  */
       if(isset($_POST['contact'])){
@@ -134,6 +148,8 @@ function addData($post){
         /* REMOVE THE LAST COMMA FROM THE CONTACTS */
         $contact = substr($contact, 0, -1);
       }
+
+//echo $contact;
 
       if(isset($_POST['age'])){
         $age = $_POST['age'];
@@ -151,7 +167,7 @@ function addData($post){
         [':phone',$post['phone'],'str'],
         [':email',$post['email'],'str'],
         [':dob',$post['dob'],'str'],
-        [':contact', $post['contact'], 'str'],
+        [':contact',$contact, 'str'],
         [':age',$age,'str']
       ];
 
@@ -213,24 +229,24 @@ $form = <<<HTML
 
     <div class="form-group">
       <label for="dob">Date of Birth{$elementsArr['dob']['errorOutput']}</label>
-      <input type="date" class="form-control" id="dob" name="dob" value="{$elementsArr['dob']['value']}" >
+      <input type="text" class="form-control" id="dob" name="dob" value="{$elementsArr['dob']['value']}" >
     </div>
 
-    <p>Please select contact options (optional):{$elementsArr['contact']['errorOutput']}</p>
+    <p>Please select contact options (optional):</p>
     <div class="form-check form-check-inline">
-      <input class="form-check-input" type="checkbox" name="contact[]" id="cpntact1" value="Newsletter" {$elementsArr['contact']['value']['newsletter']}>
+      <input class="form-check-input" type="checkbox" name="contact[]" id="cpntact1" value="Newsletter" {$elementsArr['contact']['status']['newsletter']}>
       <label class="form-check-label" for="contact1">Newsletter</label>
     </div>
     <div class="form-check form-check-inline">
-      <input class="form-check-input" type="checkbox" name="contact[]" id="contact2" value="Email Updates" {$elementsArr['contact']['value']['emailupdates']}>
+      <input class="form-check-input" type="checkbox" name="contact[]" id="contact2" value="Email Updates" {$elementsArr['contact']['status']['emailupdates']}>
       <label class="form-check-label" for="contact2">Email Updates</label>
     </div>
     <div class="form-check form-check-inline">
-      <input class="form-check-input" type="checkbox" name="contact[]" id="contact3" value="Text Updates" {$elementsArr['contact']['value']['textupdates']}>
+      <input class="form-check-input" type="checkbox" name="contact[]" id="contact3" value="Text Updates" {$elementsArr['contact']['status']['textupdates']}>
       <label class="form-check-label" for="contact3">Text updates</label>
     </div>
         
-    <p>Please select an age-group (required):</p>
+    <p>Please select an age-group (required): {$elementsArr['age']['errorOutput']}</p>
     <div class="form-check form-check-inline">
       <input class="form-check-input" type="radio" name="age" id="age1" value="10-18"  {$elementsArr['age']['value']['10-18']}>
       <label class="form-check-label" for="age1">10-18</label>

@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 //require_once 'classes/StickyForm.php'
 
 
@@ -7,6 +7,9 @@
 
 /* HERE I REQUIRE AND USE THE STICKYFORM CLASS THAT DOES ALL THE VALIDATION AND CREATES THE STICKY FORM.  THE STICKY FORM CLASS USES THE VALIDATION CLASS TO DO THE VALIDATION WORK.*/
 require_once('classes/StickyForm.php');
+//require_once('pages/routes.php');
+//security();
+
 $stickyForm = new StickyForm();
 
 /*THE INIT FUNCTION IS WRITTEN TO START EVERYTHING OFF IT IS CALLED FROM THE INDEX.PHP PAGE */
@@ -15,6 +18,7 @@ function init(){
 
   /* IF THE FORM WAS SUBMITTED DO THE FOLLOWING  */
   if(isset($_POST['submit'])){
+	security();
 
     /*THIS METHODS TAKE THE POST ARRAY AND THE ELEMENTS ARRAY (SEE BELOW) AND PASSES THEM TO THE VALIDATION FORM METHOD OF THE STICKY FORM CLASS.  IT UPDATES THE ELEMENTS ARRAY AND RETURNS IT, THIS IS STORED IN THE $postArr VARIABLE */
     $postArr = $stickyForm->validateForm($_POST, $elementsArr);
@@ -96,10 +100,10 @@ function addData($post){
 						/** IF THE PASSWORD IS NOT VERIFIED USING PASSWORD_VERIFY THEN RETURN FAILED, OTHERWISE RETURN SUCCESS, IF NO RECORDS ARE FOUND RETURN NO RECORDS FOUND. */
 						if(password_verify($post['password'], $records[0]['password'])){
 							session_start();
+							$_SESSION['access'] = "accessGranted";
 							$_SESSION['status'] = $records[0]['status'];
 							//return "success";
 							header('location: index.php?page=welcome');
-	 
 						}
 						else {
 							return "There was a problem logging in with those credentials";

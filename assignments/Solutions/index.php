@@ -5,6 +5,7 @@ require_once('pages/routes.php');
 //$login = new LoginPage;
 //$login->login();
 $nav = "";
+//security();
 ?>
 
 <!DOCTYPE html>
@@ -20,7 +21,15 @@ $nav = "";
 		<?php
 
 			/* THIS IS THE PHP PAGE  */
-			echo $nav;
+
+			
+			/* THIS IS THE PHP PAGE  */
+
+			if($_SESSION['status'] === 'Admin'){
+                echo $navAdmin;
+            } else {
+                echo $navStaff;
+            }
 			
 			/* THE ACKNOWLEDGEMENT GOES HERE AS THE FIRST INDEX OF THE ARRAY  */
 			echo $result[0]; 

@@ -1,4 +1,6 @@
 <?php
+security();
+
 // from github.com/sshaper/cps276_examples/blob/master/php-hashed-login/classes/Admin.php
 /* 
 class Admin{
@@ -105,11 +107,11 @@ $elementsArr = [
     ],
 
     "password"=>[
-        "errorMessage"=>"<span style='color: red; margin-left: 15px;'>Enter the email and corrisponding password.</span>",
+    "errorMessage"=>"<span style='color: red; margin-left: 15px;'>Enter the email and corrisponding password.</span>",
     "errorOutput"=>"",
-    "type"=>"password",
-        "value"=>"",
-        "regex"=>"password"
+    "type"=>"text",
+    "value"=>"enterpasswprd",
+    "regex"=>"password"
     ],
    
   "status"=>[
@@ -151,7 +153,6 @@ function addData($post){
         [':name',$post['name'],'str'],
         [':email',$post['email'],'str'],
         [':password',$password,'str'],
-        //[':financial',$financial,'str'],
         [':status',$_POST['status'],'str']
       ];
 

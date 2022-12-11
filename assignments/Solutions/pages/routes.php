@@ -1,6 +1,6 @@
 <?php
 
-//$path = "index.php?page=welcome"; //maybe change to login?
+$path = "index.php?page=login"; //maybe change to login?
 
 
 
@@ -20,29 +20,14 @@
 
 HTML;*/
 
-if($_POST)
-
-$output = "";
 	
-	function security(){
-		session_start();
-		if($_SESSION['access'] !== "accessGranted"){
-		  header('location: index.php');
-          $output = $navStaff;
-
-          if($_GET['status'] === 'admin'){
-            $output = $navAdmin;
-          }
-		}
-
-         
-	  }
 $navStaff=<<<HTML
     <nav class="nav">
         <a class="nav-link" href="index.php?page=addContact">Add Contact Information</a>
         <a class="nav-link" href="index.php?page=deleteContacts">Delete contact(s)</a>
-    </nav>
+        <a class="nav-link" href="index.php?page=logout">Logout</a>
 
+    </nav>
 HTML;
 
 $navAdmin=<<<HTML
@@ -51,9 +36,24 @@ $navAdmin=<<<HTML
         <a class="nav-link" href="index.php?page=deleteContacts">Delete contact(s)</a>
         <a class="nav-link" href="index.php?page=addAdmin">Add Admin Information</a>
         <a class="nav-link" href="index.php?page=deleteAdmins">Delete Admin(s)</a>
-    </nav>
+        <a class="nav-link" href="index.php?page=logout">Logout</a>
 
+    </nav>
 HTML;
+
+function security(){
+    session_start();
+    if($_SESSION['access'] !== "accessGranted"){
+        header('location: login.php');
+    } else {
+        /* LOOPS THROUGH THE POST ARRAY AND CHECK FOR ANY BLANK VALUES. IF FOUND REDIRECT BACK TO THE FORM AND EXIT THE SCRIPT.*/
+
+
+		
+	}
+}
+
+
 
 if(isset($_GET)){
     if($_GET['page'] === "addContact"){
@@ -89,6 +89,12 @@ if(isset($_GET)){
 
     }
 
+    else if($_GET['page'] === "logout"){
+        require_once('logout.php');
+        $result = init();
+
+    }
+
     else {
         header('location: '.$path);
     }
@@ -98,6 +104,8 @@ else {
     header('location: '.$path);
 }
 
+
+//if(isset($_GET)){}
 
 
 

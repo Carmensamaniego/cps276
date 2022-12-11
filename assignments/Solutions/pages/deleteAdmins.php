@@ -1,4 +1,7 @@
 <?php
+security();
+
+
 function init(){
 
     require_once 'classes/Pdo_methods.php';
@@ -50,6 +53,7 @@ function init(){
         <tr>
         <th>Name</th>
         <th>Email</th>
+        <th>Password</th>
         <th>Status</th>
         </tr>
     </thead><tbody>";
@@ -57,6 +61,7 @@ function init(){
     foreach($records as $row){
         $output .= "<tr><td>{$row['name']}</td>
         <td>{$row['email']}</td>
+        <td>{$row['password']}</td>
         <td>{$row['status']}</td>
         <td><input type='checkbox' name='chkbx[]' value='{$row['id']}' /></td></tr>";
     }
