@@ -25,14 +25,14 @@ function init(){
     }
     else{
       /* IF THERE WAS A PROBLEM WITH THE FORM VALIDATION THEN THE MODIFIED ARRAY ($postArr) WILL BE SENT AS THE SECOND PARAMETER.  THIS MODIFIED ARRAY IS THE SAME AS THE ELEMENTS ARRAY BUT ERROR MESSAGES AND VALUES HAVE BEEN ADDED TO DISPLAY ERRORS AND MAKE IT STICKY */
-      return getForm("",$postArr);
+      return getForm("<h1>Add Contact</h1>",$postArr);
     }
     
   }
 
   /* THIS CREATES THE FORM BASED ON THE ORIGINAL ARRAY THIS IS CALLED WHEN THE PAGE FIRST LOADS BEFORE A FORM HAS BEEN SUBMITTED */
   else {
-      return getForm("", $elementsArr);
+      return getForm("<h1>Add Contact</h1>", $elementsArr);
     } 
 }
 
@@ -63,7 +63,7 @@ $elementsArr = [
     "errorMessage"=>"<span style='color: red; margin-left: 15px;'>City cannot be blank</span>",
     "errorOutput"=>"",
     "type"=>"text",
-    "value"=>"Scott",
+    "value"=>"Scottsdale",
     "regex"=>"city"
     ],
 
@@ -87,31 +87,17 @@ $elementsArr = [
     "errorOutput"=>"",
     "type"=>"text",
     "value"=>"abc@xyz.com",
-        "regex"=>"email"
+    "regex"=>"email"
     ],
    
     "dob"=>[
     "errorMessage"=>"<span style='color: red; margin-left: 15px;'>You must select valid date of birth</span>",
     "errorOutput"=>"",
     "type"=>"text",
-     "value"=>"",
-     "regex"=>"dob"
+    "value"=>"11/29/1988",
+    "regex"=>"dob"
      ],
 
-   /*  "contact"=>[
-      "action"=>"notRequired",
-      "errorOutput"=>"",
-      "type"=>"checkbox",
-      "status"=>["newsletter"=>"", "emailupdates"=>"", "textupdates"=>""]
-    ],
-
-    "age"=>[
-    "action"=>"required",
-    "errorMessage"=>"<span style='color: red; margin-left: 15px;'>You must select at least one financial option</span>",
-    "errorOutput"=>"",
-    "type"=>"radio",
-    "value"=>["10-18"=>"", "19-30"=>"", "31-50"=>"", "51+"=>""]
-  ]*/
   "contact"=>[
     "type"=>"checkbox",
     "action"=>"notRequired",
@@ -138,10 +124,10 @@ function addData($post){
       $pdo = new PdoMethods();
 
       $sql = "INSERT INTO contactsTable (name, address, city, state, phone, email, dob, contact, age) VALUES (:name, :address, :city, :state, :phone, :email, :dob, :contact, :age)";
+      $contact = "";
 
       /* THIS TAKE THE ARRAY OF CHECK BOXES AND PUT THE VALUES INTO A STRING SEPERATED BY COMMAS  */
       if(isset($_POST['contact'])){
-        $contact = "";
         foreach($post['contact'] as $v){
           $contact .= $v.",";
         }
@@ -174,10 +160,10 @@ function addData($post){
       $result = $pdo->otherBinded($sql, $bindings);
 
       if($result == "error"){
-        return getForm("<p>There was a problem processing your form</p>", $elementsArr);
+        return getForm("<h1>Add Contact</h1><p>There was a problem processing your form</p>", $elementsArr);
       }
       else {
-        return getForm("<p>Contact Information Added</p>", $elementsArr);
+        return getForm("<h1>Add Contact</h1><p>Contact Information Added</p>", $elementsArr);
       }
       
 }
@@ -192,7 +178,7 @@ $options = $stickyForm->createOptions($elementsArr['state']);
 /* THIS IS A HEREDOC STRING WHICH CREATES THE FORM AND ADD THE APPROPRIATE VALUES AND ERROR MESSAGES */
 $form = <<<HTML
     
-    <h1>Add Contact</h1>
+    
 
     <form method="post" action="index.php?page=addContact">
     <div class="form-group">
@@ -234,7 +220,7 @@ $form = <<<HTML
 
     <p>Please select contact options (optional):</p>
     <div class="form-check form-check-inline">
-      <input class="form-check-input" type="checkbox" name="contact[]" id="cpntact1" value="Newsletter" {$elementsArr['contact']['status']['newsletter']}>
+      <input class="form-check-input" type="checkbox" name="contact[]" id="contact1" value="Newsletter" {$elementsArr['contact']['status']['newsletter']}>
       <label class="form-check-label" for="contact1">Newsletter</label>
     </div>
     <div class="form-check form-check-inline">

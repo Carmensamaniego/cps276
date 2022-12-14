@@ -1,4 +1,6 @@
 <?php
+
+//session_start();// delete later
 /* THIS ENTIRE PAGE IS JUST A PLACEHOLDER PAGE WHICH THE FORM WILL BE INJECTED INTO */
 /*I REQUIRE IN THE ROUTES PAGE WHICH IS ACTUALLY DOES THE WORK FOR GETTING THE PAGES.*/ 
 require_once('pages/routes.php');
@@ -24,11 +26,13 @@ $nav = "";
 
 			
 			/* THIS IS THE PHP PAGE  */
-
-			if($_SESSION['status'] === 'Admin'){
-                echo $navAdmin;
-            } else {
-                echo $navStaff;
+			//echo $_SESSION['name']; //this prints fine
+            if(isset($_SESSION['access']) && $_SESSION['access'] === 'accessGranted') {
+                if($_SESSION['status'] === 'Admin'){
+                    echo $navAdmin;
+                } else {
+                    echo $navStaff;
+                }
             }
 			
 			/* THE ACKNOWLEDGEMENT GOES HERE AS THE FIRST INDEX OF THE ARRAY  */

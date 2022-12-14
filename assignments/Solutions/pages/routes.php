@@ -44,10 +44,9 @@ HTML;
 function security(){
     session_start();
     if($_SESSION['access'] !== "accessGranted"){
-        header('location: login.php');
+        header('location: index.php?page=login');
     } else {
         /* LOOPS THROUGH THE POST ARRAY AND CHECK FOR ANY BLANK VALUES. IF FOUND REDIRECT BACK TO THE FORM AND EXIT THE SCRIPT.*/
-
 
 		
 	}

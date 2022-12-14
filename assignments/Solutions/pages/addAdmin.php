@@ -2,49 +2,7 @@
 security();
 
 // from github.com/sshaper/cps276_examples/blob/master/php-hashed-login/classes/Admin.php
-/* 
-class Admin{
 
-    public function addAdmin($post){
-        $pdo = new PdoMethods();
-        $sql = "SELECT username FROM admins WHERE username = :username";
-        $bindings = array(
-            array(':username', $post['username'], 'str')
-        ); 
-
-        $records = $pdo->selectBinded($sql, $bindings);
-
-        /* IF THERE WAS AN RETURN ERROR STRING */
-        /*if($records == 'error'){
-            return 'There was an error processing your request';
-        }
-        
-        /** CHECK FOR A DUPLICATE USERNAME IF FOUND THEN RETURN DUPLICATE OTHERWISE ADD USERNAME AND PASSWORD TO DATABASE */
-        /*else{
-            if(count($records) != 0){
-                return "There is already someone with that username";
-            }
-            else {
-                /** ENCRYPT THE PASSWORD USING PASSWORD_HASH */
-               /* $password = password_hash($post['password'], PASSWORD_DEFAULT);
-
-
-                $sql = "INSERT INTO admin (username, password) VALUES (:username, :password)";
-                $bindings = array(
-                    array(':username',$post['username'],'str'),
-                    array(':password',$password,'str')
-                );
-                $result = $pdo->otherBinded($sql, $bindings);
-                if($result = 'noerror'){
-                    return 'Admin added';
-                }
-                else {
-                    return 'There was a problem adding this administrator';
-                }
-            }
-        }
-    }
-}*/
 
 
 
@@ -74,52 +32,50 @@ function init(){
     }
     else{
       /* IF THERE WAS A PROBLEM WITH THE FORM VALIDATION THEN THE MODIFIED ARRAY ($postArr) WILL BE SENT AS THE SECOND PARAMETER.  THIS MODIFIED ARRAY IS THE SAME AS THE ELEMENTS ARRAY BUT ERROR MESSAGES AND VALUES HAVE BEEN ADDED TO DISPLAY ERRORS AND MAKE IT STICKY */
-      return getForm("",$postArr);
+      return getForm("<h1>Add Admin</h1>",$postArr);
     }
     
   }
 
   /* THIS CREATES THE FORM BASED ON THE ORIGINAL ARRAY THIS IS CALLED WHEN THE PAGE FIRST LOADS BEFORE A FORM HAS BEEN SUBMITTED */
   else {
-      return getForm("", $elementsArr);
+      return getForm("<h1>Add Admin</h1>", $elementsArr);
     } 
 }
 
 /* THIS IS THE DATA OF THE FORM.  IT IS A MULTI-DIMENTIONAL ASSOCIATIVE ARRAY THAT IS USED TO CONTAIN FORM DATA AND ERROR MESSAGES.   EACH SUB ARRAY IS NAMED BASED UPON WHAT FORM FIELD IT IS ATTACHED TO. FOR EXAMPLE, "NAME" GOES TO THE TEXT FIELDS WITH THE NAME ATTRIBUTE THAT HAS THE VALUE OF "NAME". NOTICE THE TYPE IS "TEXT" FOR TEXT FIELD.  DEPENDING ON WHAT HAPPENS THIS ASSOCIATE ARRAY IS UPDATED.*/
 $elementsArr = [
   "masterStatus"=>[
-    "status"=>"noerrors",
-    "type"=>"masterStatus"
+  "status"=>"noerrors",
+  "type"=>"masterStatus"
   ],
 	"name"=>[
-	  "errorMessage"=>"<span style='color: red; margin-left: 15px;'>Name cannot be blank and must be a standard name</span>",
-    "errorOutput"=>"",
-    "type"=>"text",
-    "value"=>"First Last",
-		"regex"=>"name"
+	"errorMessage"=>"<span style='color: red; margin-left: 15px;'>Name cannot be blank and must be a standard name</span>",
+  "errorOutput"=>"",
+  "type"=>"text",
+  "value"=>"First Last",
+	"regex"=>"name"
 	],
-	"email"=>[
-		"errorMessage"=>"<span style='color: red; margin-left: 15px;'>Email cannot be blank and must be a valid email.</span>",
-    "errorOutput"=>"",
-    "type"=>"text",
-		"value"=>"abc@xyz.com",
-		"regex"=>"email"
+  "email"=>[
+  "errorMessage"=>"<span style='color: red; margin-left: 15px;'>Email cannot be blank and must be a valid email.</span>",
+  "errorOutput"=>"",
+  "type"=>"text",
+  "value"=>"abc@staff.com",
+  "regex"=>"email"
     ],
 
-    "password"=>[
-    "errorMessage"=>"<span style='color: red; margin-left: 15px;'>Enter the email and corrisponding password.</span>",
-    "errorOutput"=>"",
-    "type"=>"text",
-    "value"=>"enterpasswprd",
-    "regex"=>"password"
+  "password"=>[
+  "errorMessage"=>"<span style='color: red; margin-left: 15px;'>Password can not be blank and must be a valid password.</span>",
+  "errorOutput"=>"",
+  "type"=>"text",
+  "value"=>"password",
+  "regex"=>"password"
     ],
    
   "status"=>[
-    "errorMessage"=>"<span style='color: red; margin-left: 15px;'>Select a status option</span>",
-    "errorOutput"=>"",
-    "type"=>"select",
-    "action"=>"required",
-    "regex"=>"status"
+  "type"=>"select",
+  "action"=>"required",
+  "regex"=>"status"
   ],
 ];
 
@@ -129,43 +85,50 @@ function addData($post){
   global $elementsArr;  
   /* IF EVERYTHING WORKS ADD THE DATA HERE TO THE DATABASE HERE USING THE $_POST SUPER GLOBAL ARRAY */
       //print_r($_POST);
-      require_once('classes/Pdo_methods.php');
+    require_once('classes/Pdo_methods.php');
 
-      $pdo = new PdoMethods();
+    $pdo = new PdoMethods();
 
-      $sql = "INSERT INTO admins (name, email, password, status) VALUES (:name, :email, :password, :status)";
-
-      /* THIS TAKE THE ARRAY OF CHECK BOXES AND PUT THE VALUES INTO A STRING SEPERATED BY COMMAS  */
-      /*if(isset($_POST['financial'])){
-        $financial = "";
-        foreach($post['financial'] as $v){
-          $financial .= $v.",";
-        }
-        /* REMOVE THE LAST COMMA FROM THE CONTACTS */
-        /*$financial = substr($financial, 0, -1);
-      }*/
+    $sql = "SELECT email FROM admins where email = :email";
+    $bindings = [
+      [':email',$post['email'],'str']
+    ];
 
 
+    $records = $pdo->selectBinded($sql, $bindings);
 
-      $password = password_hash($post['password'], PASSWORD_DEFAULT);
+    if(count($records) > 0){
+      return getForm("<h1>Add Admin</h1><p>Someone exist with that email.</p>", $elementsArr);
+    }
+    //else {
+      //return getForm("<p>Admin Information Added</p>", $elementsArr);
 
-      $bindings = [
-        [':name',$post['name'],'str'],
-        [':email',$post['email'],'str'],
-        [':password',$password,'str'],
-        [':status',$_POST['status'],'str']
-      ];
+    //}
+    
 
-      $result = $pdo->otherBinded($sql, $bindings);
 
-      if($result == "error"){
-        return getForm("<p>There was a problem processing your form</p>", $elementsArr);
-      }
-      else {
-        //echo $password; //delete later. this gives hashed password
-        return getForm("<p>Admin Information Added</p>", $elementsArr);
-      }
-      
+    $sql = "INSERT INTO admins (name, email, password, status) VALUES (:name, :email, :password, :status)";
+
+
+    $password = password_hash($post['password'], PASSWORD_DEFAULT);
+
+    $bindings = [
+      [':name',$post['name'],'str'],
+      [':email',$post['email'],'str'],
+      [':password',$password,'str'],
+      [':status',$_POST['status'],'str']
+    ];
+
+    $result = $pdo->otherBinded($sql, $bindings);
+
+    if($result == "error"){
+      return getForm("<h1>Add Admin</h1><p>There was a problem processing your form</p>", $elementsArr);
+    }
+    else {
+      //echo $password; //delete later. this gives hashed password
+      return getForm("<h1>Add Admin</h1><p>Admin Information Added</p>", $elementsArr);
+    }
+    
 }
    
 
@@ -177,7 +140,6 @@ global $stickyForm;
 
 /* THIS IS A HEREDOC STRING WHICH CREATES THE FORM AND ADD THE APPROPRIATE VALUES AND ERROR MESSAGES */
 $form = <<<HTML
-    <h1>Add Admin</h1>
     <form method="post" action="index.php?page=addAdmin">
     <div class="form-group">
       <label for="name">Name (letters only){$elementsArr['name']['errorOutput']}</label>
@@ -189,11 +151,11 @@ $form = <<<HTML
     </div>
             
     <div class="form-group">
-      <label for="password">Password {$elementsArr['email']['errorOutput']}</label>
+      <label for="password">Password {$elementsArr['password']['errorOutput']}</label>
       <input type="password" class="form-control" id="password" name="password" value="{$elementsArr['password']['value']}" >
     </div>
 
-    <p>Status{$elementsArr['status']['errorOutput']}</p>
+    <p>Status</p>
     <div class="form-check form-check-inline">
             <select id="status" name='status' class="form-select">
                 <option selected>Staff</option>

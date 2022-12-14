@@ -18,10 +18,12 @@ function init(){
 
   /* IF THE FORM WAS SUBMITTED DO THE FOLLOWING  */
   if(isset($_POST['submit'])){
-	security();
+	//security();
 
     /*THIS METHODS TAKE THE POST ARRAY AND THE ELEMENTS ARRAY (SEE BELOW) AND PASSES THEM TO THE VALIDATION FORM METHOD OF THE STICKY FORM CLASS.  IT UPDATES THE ELEMENTS ARRAY AND RETURNS IT, THIS IS STORED IN THE $postArr VARIABLE */
     $postArr = $stickyForm->validateForm($_POST, $elementsArr);
+
+	//print_r($postArr);
 
     /* THE ELEMENTS ARRAY HAS A MASTER STATUS AREA. IF THERE ARE ANY ERRORS FOUND THE STATUS IS CHANGED TO "ERRORS" FROM THE DEFAULT OF "NOERRORS".  DEPENDING ON WHAT IS RETURNED DEPENDS ON WHAT HAPPENS NEXT.  IN THIS CASE THE RETURN MESSAGE HAS "NO ERRORS" SO WE HAVE NO PROBLEMS WITH OUR VALIDATION AND WE CAN SUBMIT THE FORM */
     if($postArr['masterStatus']['status'] == "noerrors"){
@@ -32,42 +34,44 @@ function init(){
     }
     else{
       /* IF THERE WAS A PROBLEM WITH THE FORM VALIDATION THEN THE MODIFIED ARRAY ($postArr) WILL BE SENT AS THE SECOND PARAMETER.  THIS MODIFIED ARRAY IS THE SAME AS THE ELEMENTS ARRAY BUT ERROR MESSAGES AND VALUES HAVE BEEN ADDED TO DISPLAY ERRORS AND MAKE IT STICKY */
-      return getForm("",$postArr);
+   //  print_r($elementsArr); 
+	  return getForm("<h1>Login</h1>",$postArr);
     }
     
   }
 
   /* THIS CREATES THE FORM BASED ON THE ORIGINAL ARRAY THIS IS CALLED WHEN THE PAGE FIRST LOADS BEFORE A FORM HAS BEEN SUBMITTED */
   else {
-      return getForm("", $elementsArr);
+      return getForm("<h1>Login</h1>", $elementsArr);
     } 
 }
 
 /* THIS IS THE DATA OF THE FORM.  IT IS A MULTI-DIMENTIONAL ASSOCIATIVE ARRAY THAT IS USED TO CONTAIN FORM DATA AND ERROR MESSAGES.   EACH SUB ARRAY IS NAMED BASED UPON WHAT FORM FIELD IT IS ATTACHED TO. FOR EXAMPLE, "NAME" GOES TO THE TEXT FIELDS WITH THE NAME ATTRIBUTE THAT HAS THE VALUE OF "NAME". NOTICE THE TYPE IS "TEXT" FOR TEXT FIELD.  DEPENDING ON WHAT HAPPENS THIS ASSOCIATE ARRAY IS UPDATED.*/
 $elementsArr = [
-  "masterStatus"=>[
+  	"masterStatus"=>[
     "status"=>"noerrors",
     "type"=>"masterStatus"
   ],
 	"email"=>[
-	  "errorMessage"=>"<span style='color: red; margin-left: 15px;'>Email cannot be blank and must be a standard name</span>",
+	"errorMessage"=>"<span style='color: red; margin-left: 15px;'>Email cannot be blank and must be a standard name</span>",
     "errorOutput"=>"",
     "type"=>"text",
     "value"=>"email@status.com",
-		"regex"=>"email"
+	"regex"=>"email"
 	],
 
     "password"=>[
     "errorMessage"=>"<span style='color: red; margin-left: 15px;'>Password cannot be blank.</span>",
     "errorOutput"=>"",
-    "type"=>"password",
+    "type"=>"text",
     "value"=>"password",
-        "regex"=>"password"
+	"regex"=>"password"
     ],
 
     
 ];
 
+$name = "";
 
 /*THIS FUNCTION CAN BE CALLED TO ADD DATA TO THE DATABASE */
 function addData($post){
@@ -89,6 +93,7 @@ function addData($post){
 			);
 	
 			$records = $pdo->selectBinded($sql, $bindings);
+
 	
 				if($records == 'error'){
 					return "There was an error logging it";
@@ -102,15 +107,22 @@ function addData($post){
 							session_start();
 							$_SESSION['access'] = "accessGranted";
 							$_SESSION['status'] = $records[0]['status'];
+							$_SESSION['name'] = $records[0]['name'];
+
+							//global $name = $_SESSION['name'];
+
+							//printf(var_dump($records));
+
 							//return "success";
 							header('location: index.php?page=welcome');
+
 						}
 						else {
-							return "There was a problem logging in with those credentials";
+							return getForm("<h1>Login</h1><p>There was a problem logging in with those credentials</p>", $elementsArr);
 						}
 					}
 					else {
-						return "There was a problem logging in with those credentials";
+						return getForm("<h1>Login</h1><p>There was a problem logging in with those credentials</p>", $elementsArr);
 					}
 				}
       
@@ -139,15 +151,14 @@ $form = <<<HTML
 
 	<main class="container"> 
 			<form method='post' action='index.php?page=login'>
-			<h1>Login</h1>
 			
 			<div class="form-group">
-				<label for="email">Email</label>
+				<label for="email">Email{$elementsArr['email']['errorOutput']}</label>
 				<input type="text" class="form-control" name="email" id="email" value="csamanicg@admin.com">
 			</div>
 
 			<div class="form-group">
-				<label for="password">Password</label>
+				<label for="password">Password{$elementsArr['password']['errorOutput']}</label>
 				<input type="password" class="form-control" name="password" id="password" value="password">
 			</div>
 
@@ -165,16 +176,6 @@ HTML;
 return [$acknowledgement, $form];
 
 }
-
-
-	/*
-	function security(){
-		session_start();
-		if($_SESSION['access'] !== "accessGranted"){
-		  header('location: index.php');
-		}
-	  }*/
-
 
 
 ?>
