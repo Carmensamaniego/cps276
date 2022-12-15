@@ -28,7 +28,7 @@ function init(){
         }
     }
     
-    $output = "";
+    $output = "<form method='post' action='index.php?page=deleteContacts'><h1>Delete Contact(s)</h1><input type='submit' class='btn btn-danger' name='delete' value='Delete'/><br><br><table class='table table-striped table-bordered'>";
     
     $pdo = new PdoMethods();
 
@@ -42,9 +42,11 @@ function init(){
         return [$output,""];
     }
     else {
-        $output = "<form method='post' action='index.php?page=deleteContacts'>";
-        $output .= "<input type='submit' class='btn btn-danger' name='delete' value='Delete'/><br><br><table class='table table-striped table-bordered'>
-    <thead>
+       // $output = "<form method='post' action='index.php?page=deleteContacts'>";
+       // $output .= "<h1>Delete Contact(s)</h1>";
+       // $output .= "<input type='submit' class='btn btn-danger' name='delete' value='Delete'/><br><br><table class='table table-striped table-bordered'>
+        $output .= "
+       <thead>
         <tr>
         <th>Name</th>
         <th>Address</th>

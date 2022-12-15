@@ -31,7 +31,7 @@ function init(){
         }
     }
     
-    $output = "";
+    $output = "<h1>Delete Contact(s)</h1>";
 
     
     
@@ -43,12 +43,14 @@ function init(){
     $records = $pdo->selectNotBinded($sql);
 
     if(count($records) === 0){
-        $output = "<p>There are no records to display</p>";
+        $output = "<h1>Delete Contact(s)</h1><p>There are no records to display</p>";
         return [$output,""];
     }
     else {
         $output = "<form method='post' action='index.php?page=deleteAdmins'>";
+        $output .= "<h1>Delete Admin(s)</h1>";
         $output .= "<input type='submit' class='btn btn-danger' name='delete' value='Delete'/><br><br><table class='table table-striped table-bordered'>
+        
     <thead>
         <tr>
         <th>Name</th>
